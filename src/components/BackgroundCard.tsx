@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
 	bgImage: {
 		width: SCREEN_WIDTH,
 		height: 240 * SCALE,
+		marginBottom: 120 * SCALE,
 	},
 	backCard: {
 		position: "absolute",
@@ -73,18 +74,18 @@ const styles = StyleSheet.create({
 		top: 60 * SCALE,
 		left: 20 * SCALE,
 		fontSize: theme.typography.fontSize.lg * SCALE,
-		fontWeight: "medium",
+		fontWeight: "500",
 	},
 	cardName: {
 		bottom: 20 * SCALE,
 		left: 20 * SCALE,
 		fontSize: theme.typography.fontSize.xs * SCALE,
-		fontWeight: "medium",
+		fontWeight: "500",
 	},
 	cardDate: {
 		bottom: 20 * SCALE,
 		right: 20 * SCALE,
 		fontSize: theme.typography.fontSize.xs * SCALE,
-		fontWeight: "medium",
+		fontWeight: "500",
 	},
 });

@@ -2,6 +2,7 @@ import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import { BackgroundImageCard } from "../components/BackgroundCard";
+import { CreditCardForm } from "../components/CreditCardForm";
 import { theme } from "../theme";
 
 export default function Index() {
@@ -15,6 +16,7 @@ export default function Index() {
 		<View style={styles.container}>
 			<StatusBar style="light" />
 			<BackgroundImageCard />
+			<CreditCardForm />
 		</View>
 	);
 }
