@@ -20,12 +20,12 @@ export const CreditCardForm = () => {
 	const [month, setMonth] = useState<string>("");
 	const [year, setYear] = useState<string>("");
 	const [cvcNumber, setCVCNumber] = useState<string>("");
-	const [error, setError] = useState(false);
+	const [error, setError] = useState({ name: false, number: false });
 
 	const handleCardNameChange = (value: string) => {
 		setCardName(value);
 		if (value.trim() === "") {
-			setError(true);
+			setError((prev) => ({ ...prev, name: true }));
 			return;
 		}
 
@@ -34,20 +34,20 @@ export const CreditCardForm = () => {
 		if (!valid) return;
 
 		if (value.length > 25) {
-			setError(true);
+			setError((prev) => ({ ...prev, name: true }));
 		} else {
-			setError(false);
+			setError((prev) => ({ ...prev, name: false }));
 		}
 	};
 
 	const handleCardNumberChange = (value: string) => {
 		const digitsOnly = value.replace(/\D/g, "");
 
-		const formattedCardNumber = digitsOnly.replace(/(.{4})/g, "$1").trim();
+		const formattedCardNumber = digitsOnly.replace(/(.{4})/g, "$1 ").trim();
 		setCardNumber(formattedCardNumber);
 
 		if (digitsOnly === "") {
-			setError(true);
+			setError((prev) => ({ ...prev, name: true }));
 			return;
 		}
 
@@ -56,9 +56,9 @@ export const CreditCardForm = () => {
 		if (!valid) return;
 
 		if (digitsOnly.length !== 16) {
-			setError(true);
+			setError((prev) => ({ ...prev, name: true }));
 		} else {
-			setError(false);
+			setError((prev) => ({ ...prev, name: false }));
 		}
 	};
 
@@ -68,13 +68,13 @@ export const CreditCardForm = () => {
 				<View style={styles.cardContainer}>
 					<Text style={styles.label}>CARDHOLDER NAME</Text>
 					<TextInput
-						style={[styles.input, error && styles.inputError]}
+						style={[styles.input, error.name && styles.inputError]}
 						placeholder="e.g. Jane Applessed"
 						keyboardType="default"
 						value={cardName}
 						onChangeText={handleCardNameChange}
 					/>
-					{error && (
+					{error.name && (
 						<Text style={styles.errorMessage}>Can't be blank or invalid</Text>
 					)}
 				</View>
@@ -82,13 +82,13 @@ export const CreditCardForm = () => {
 				<View style={styles.cardContainer}>
 					<Text style={styles.label}>CARD NUMBER</Text>
 					<TextInput
-						style={[styles.input, error && styles.inputError]}
+						style={[styles.input, error.number && styles.inputError]}
 						placeholder="e.g. 1234 5678 9123 0000"
 						keyboardType="number-pad"
 						value={cardNumber}
 						onChangeText={handleCardNumberChange}
 					/>
-					{error && (
+					{error.number && (
 						<Text style={styles.errorMessage}>Wrong format, numbers only</Text>
 					)}
 				</View>
