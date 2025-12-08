@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
 	Alert,
 	Dimensions,
@@ -14,25 +15,84 @@ const FIGMA_WIDTH = 375;
 const SCALE = SCREEN_WIDTH / FIGMA_WIDTH;
 
 export const CreditCardForm = () => {
+	const [cardName, setCardName] = useState<string>("");
+	const [cardNumber, setCardNumber] = useState<string>("");
+	const [month, setMonth] = useState<string>("");
+	const [year, setYear] = useState<string>("");
+	const [cvcNumber, setCVCNumber] = useState<string>("");
+	const [error, setError] = useState(false);
+
+	const handleCardNameChange = (value: string) => {
+		setCardName(value);
+		if (value.trim() === "") {
+			setError(true);
+			return;
+		}
+
+		const regex = /^[A-Za-z ]*$/;
+		const valid = regex.test(value);
+		if (!valid) return;
+
+		if (value.length > 25) {
+			setError(true);
+		} else {
+			setError(false);
+		}
+	};
+
+	const handleCardNumberChange = (value: string) => {
+		const digitsOnly = value.replace(/\D/g, "");
+
+		const formattedCardNumber = digitsOnly.replace(/(.{4})/g, "$1").trim();
+		setCardNumber(formattedCardNumber);
+
+		if (digitsOnly === "") {
+			setError(true);
+			return;
+		}
+
+		const regex = /^[0-9]*$/;
+		const valid = regex.test(digitsOnly);
+		if (!valid) return;
+
+		if (digitsOnly.length !== 16) {
+			setError(true);
+		} else {
+			setError(false);
+		}
+	};
+
 	return (
 		<View style={styles.formContainer}>
 			<View style={styles.cardHolderContainer}>
 				<View style={styles.cardContainer}>
 					<Text style={styles.label}>CARDHOLDER NAME</Text>
 					<TextInput
-						style={styles.input}
+						style={[styles.input, error && styles.inputError]}
 						placeholder="e.g. Jane Applessed"
 						keyboardType="default"
+						value={cardName}
+						onChangeText={handleCardNameChange}
 					/>
+					{error && (
+						<Text style={styles.errorMessage}>Can't be blank or invalid</Text>
+					)}
 				</View>
+
 				<View style={styles.cardContainer}>
 					<Text style={styles.label}>CARD NUMBER</Text>
 					<TextInput
-						style={styles.input}
+						style={[styles.input, error && styles.inputError]}
 						placeholder="e.g. 1234 5678 9123 0000"
 						keyboardType="number-pad"
+						value={cardNumber}
+						onChangeText={handleCardNumberChange}
 					/>
+					{error && (
+						<Text style={styles.errorMessage}>Wrong format, numbers only</Text>
+					)}
 				</View>
+
 				<View style={styles.expiryCvcContainer}>
 					<View style={{ gap: 8 }}>
 						<Text style={styles.label}>EXP.DATE (MM/YY)</Text>
@@ -41,11 +101,13 @@ export const CreditCardForm = () => {
 								placeholder="MM"
 								keyboardType="number-pad"
 								style={[styles.input, styles.dateInput]}
+								value={month}
 							/>
 							<TextInput
 								placeholder="YY"
 								keyboardType="number-pad"
 								style={[styles.input, styles.dateInput]}
+								value={year}
 							/>
 						</View>
 					</View>
@@ -55,6 +117,7 @@ export const CreditCardForm = () => {
 							placeholder="e.g. 123"
 							keyboardType="number-pad"
 							style={[styles.input, styles.cvcInput]}
+							value={cvcNumber}
 						/>
 					</View>
 				</View>
@@ -109,5 +172,15 @@ const styles = StyleSheet.create({
 	},
 	cvcInput: {
 		width: 135 * SCALE,
+	},
+	errorMessage: {
+		color: theme.colors.red400,
+		fontFamily: theme.typography.fontFamily.regular,
+		fontSize: theme.typography.fontSize.sm,
+		fontWeight: "500",
+	},
+	inputError: {
+		borderWidth: 1 * SCALE,
+		borderColor: theme.colors.red400,
 	},
 });
