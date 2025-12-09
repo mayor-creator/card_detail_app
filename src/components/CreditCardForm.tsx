@@ -20,7 +20,13 @@ export const CreditCardForm = () => {
 	const [month, setMonth] = useState<string>("");
 	const [year, setYear] = useState<string>("");
 	const [cvcNumber, setCVCNumber] = useState<string>("");
-	const [error, setError] = useState({ name: false, number: false });
+	const [error, setError] = useState({
+		name: false,
+		number: false,
+		monthError: false,
+		yearError: false,
+		cvcError: false,
+	});
 
 	const handleCardNameChange = (value: string) => {
 		setCardName(value);
@@ -47,7 +53,7 @@ export const CreditCardForm = () => {
 		setCardNumber(formattedCardNumber);
 
 		if (digitsOnly === "") {
-			setError((prev) => ({ ...prev, name: true }));
+			setError((prev) => ({ ...prev, number: true }));
 			return;
 		}
 
@@ -56,9 +62,53 @@ export const CreditCardForm = () => {
 		if (!valid) return;
 
 		if (digitsOnly.length !== 16) {
-			setError((prev) => ({ ...prev, name: true }));
+			setError((prev) => ({ ...prev, number: true }));
 		} else {
-			setError((prev) => ({ ...prev, name: false }));
+			setError((prev) => ({ ...prev, number: false }));
+		}
+	};
+
+	const handleMonthExpireChange = (value: string) => {
+		value = value.replace(/\D/g, "");
+
+		if (value.length > 2) return;
+		setMonth(value);
+
+		const num = Number(value);
+		if (!value || num < 1 || num > 12) {
+			setError((prev) => ({ ...prev, monthError: true }));
+		} else {
+			setError((prev) => ({ ...prev, monthError: false }));
+		}
+	};
+
+	const handleYearExpireChange = (value: string) => {
+		value = value.replace(/\D/g, "");
+
+		if (value.length > 2) return;
+		setYear(value);
+
+		const currentYear = Number(new Date().getFullYear().toString().slice(-2));
+		const num = Number(value);
+
+		if (!value || num < currentYear) {
+			setError((prev) => ({ ...prev, yearError: true }));
+		} else {
+			setError((prev) => ({ ...prev, yearError: false }));
+		}
+	};
+
+	const handleCvcChange = (value: string) => {
+		value = value.replace(/\D/g, "");
+
+		if (value.length > 3) return;
+		setCVCNumber(value);
+
+		const num = Number(value);
+		if (!value || num < 3) {
+			setError((prev) => ({ ...prev, cvcError: true }));
+		} else {
+			setError((prev) => ({ ...prev, cvcError: false }));
 		}
 	};
 
@@ -97,18 +147,38 @@ export const CreditCardForm = () => {
 					<View style={{ gap: 8 }}>
 						<Text style={styles.label}>EXP.DATE (MM/YY)</Text>
 						<View style={styles.dateContainer}>
-							<TextInput
-								placeholder="MM"
-								keyboardType="number-pad"
-								style={[styles.input, styles.dateInput]}
-								value={month}
-							/>
-							<TextInput
-								placeholder="YY"
-								keyboardType="number-pad"
-								style={[styles.input, styles.dateInput]}
-								value={year}
-							/>
+							<View>
+								<TextInput
+									placeholder="MM"
+									keyboardType="number-pad"
+									style={[
+										styles.input,
+										styles.dateInput,
+										error.monthError && styles.inputError,
+									]}
+									value={month}
+									onChangeText={handleMonthExpireChange}
+								/>
+								{error.monthError && (
+									<Text style={styles.errorMessage}>Can't be blank</Text>
+								)}
+							</View>
+							<View>
+								<TextInput
+									placeholder="YY"
+									keyboardType="number-pad"
+									style={[
+										styles.input,
+										styles.dateInput,
+										error.yearError && styles.inputError,
+									]}
+									value={year}
+									onChangeText={handleYearExpireChange}
+								/>
+								{error.yearError && (
+									<Text style={styles.errorMessage}>Can't be blank</Text>
+								)}
+							</View>
 						</View>
 					</View>
 					<View style={{ gap: 8 }}>
@@ -116,9 +186,17 @@ export const CreditCardForm = () => {
 						<TextInput
 							placeholder="e.g. 123"
 							keyboardType="number-pad"
-							style={[styles.input, styles.cvcInput]}
+							style={[
+								styles.input,
+								styles.cvcInput,
+								error.cvcError && styles.inputError,
+							]}
 							value={cvcNumber}
+							onChangeText={handleCvcChange}
 						/>
+						{error.cvcError && (
+							<Text style={styles.errorMessage}>Can't be blank</Text>
+						)}
 					</View>
 				</View>
 				<Button label="Confirm" onPress={() => Alert.alert("Press")}></Button>
