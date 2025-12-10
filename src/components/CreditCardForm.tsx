@@ -1,7 +1,8 @@
+import { Image } from "expo-image";
 import { useState } from "react";
 import {
-	Alert,
 	Dimensions,
+	Modal,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -13,6 +14,8 @@ import Button from "./Button";
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const FIGMA_WIDTH = 375;
 const SCALE = SCREEN_WIDTH / FIGMA_WIDTH;
+
+const iconComplete = require("../../assets/images/icon-complete.svg");
 
 export const CreditCardForm = () => {
 	const [cardName, setCardName] = useState<string>("");
@@ -27,6 +30,8 @@ export const CreditCardForm = () => {
 		yearError: false,
 		cvcError: false,
 	});
+
+	const [modal, setModal] = useState<boolean>(false);
 
 	const handleCardNameChange = (value: string) => {
 		setCardName(value);
@@ -199,8 +204,27 @@ export const CreditCardForm = () => {
 						)}
 					</View>
 				</View>
-				<Button label="Confirm" onPress={() => Alert.alert("Press")}></Button>
+				<Button label="Confirm" onPress={() => setModal(true)}></Button>
 			</View>
+
+			{/*create a modal */}
+			<Modal
+				visible={modal}
+				onRequestClose={() => setModal(false)}
+				animationType="slide"
+				transparent={true}
+			>
+				<View style={styles.backdrop}>
+					<View style={styles.modalContainer}>
+						<Image source={iconComplete} style={styles.modalImage} />
+						<Text style={styles.modalTitle}>THANK YOU!</Text>
+						<Text style={styles.modalDescription}>
+							We've added your credit details
+						</Text>
+						<Button label="Continue" onPress={() => setModal(false)}></Button>
+					</View>
+				</View>
+			</Modal>
 		</View>
 	);
 };
@@ -260,5 +284,34 @@ const styles = StyleSheet.create({
 	inputError: {
 		borderWidth: 1 * SCALE,
 		borderColor: theme.colors.red400,
+	},
+	backdrop: {
+		flex: 1,
+		backgroundColor: "rgba(0,0,0,0.5)",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	modalContainer: {
+		alignItems: "center",
+		justifyContent: "center",
+		paddingLeft: 24 * SCALE,
+		paddingRight: 24 * SCALE,
+		gap: 32 * SCALE,
+	},
+	modalImage: {
+		width: 80 * SCALE,
+		height: 80 * SCALE,
+	},
+	modalTitle: {
+		color: theme.colors.purple950,
+		fontFamily: theme.typography.fontFamily.regular,
+		fontSize: theme.typography.fontSize.xxl,
+		fontWeight: "500",
+	},
+	modalDescription: {
+		color: theme.colors.gray950,
+		fontFamily: theme.typography.fontFamily.regular,
+		fontSize: theme.typography.fontSize.lg,
+		fontWeight: "500",
 	},
 });
