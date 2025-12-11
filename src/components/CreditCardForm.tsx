@@ -212,7 +212,20 @@ export const CreditCardForm = () => {
 						)}
 					</View>
 				</View>
-				<Button label="Confirm" onPress={() => setModal(true)}></Button>
+				<Button
+					label="Confirm"
+					onPress={() => setModal(true)}
+					disabled={
+						!cardName ||
+						!cardNumber ||
+						!month ||
+						!year ||
+						!cvcNumber ||
+						Object.values(error).some((e) => e) ||
+						cardNumber.replace(/\s/g, "").length < 16 ||
+						cvcNumber.length < 3
+					}
+				/>
 			</View>
 
 			{/*create a modal */}

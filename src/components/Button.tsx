@@ -8,12 +8,18 @@ const SCALE = SCREEN_WIDTH / FIGMA_WIDTH;
 type Props = {
 	label: string;
 	onPress: () => void;
+	disabled?: boolean;
 };
 
-export default function Button({ label, onPress }: Props) {
+export default function Button({ label, onPress, disabled = false }: Props) {
 	return (
-		<View style={styles.buttonContainer}>
-			<Pressable style={styles.button} onPress={onPress}>
+		<View
+			style={[
+				styles.buttonContainer,
+				disabled && { backgroundColor: theme.colors.gray400 },
+			]}
+		>
+			<Pressable style={styles.button} onPress={onPress} disabled={disabled}>
 				<Text style={styles.buttonLabel}>{label}</Text>
 			</Pressable>
 		</View>
