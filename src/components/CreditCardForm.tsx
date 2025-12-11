@@ -1,13 +1,6 @@
 import { Image } from "expo-image";
 import { useState } from "react";
-import {
-	Dimensions,
-	Modal,
-	StyleSheet,
-	Text,
-	TextInput,
-	View,
-} from "react-native";
+import { Dimensions, StyleSheet, Text, TextInput, View } from "react-native";
 import { theme } from "../theme";
 import Button from "./Button";
 
@@ -30,7 +23,6 @@ export const CreditCardForm = () => {
 		yearError: false,
 		cvcError: false,
 	});
-
 	const [modal, setModal] = useState<boolean>(false);
 
 	const handleCardNameChange = (value: string) => {
@@ -115,6 +107,22 @@ export const CreditCardForm = () => {
 		} else {
 			setError((prev) => ({ ...prev, cvcError: false }));
 		}
+	};
+
+	const handleFormReset = () => {
+		setCardName("");
+		setCardNumber("");
+		setMonth("");
+		setYear("");
+		setCVCNumber("");
+		setError({
+			name: false,
+			number: false,
+			monthError: false,
+			yearError: false,
+			cvcError: false,
+		});
+		setModal(false);
 	};
 
 	return (
@@ -208,12 +216,7 @@ export const CreditCardForm = () => {
 			</View>
 
 			{/*create a modal */}
-			<Modal
-				visible={modal}
-				onRequestClose={() => setModal(false)}
-				animationType="slide"
-				transparent={true}
-			>
+			{modal && (
 				<View style={styles.backdrop}>
 					<View style={styles.modalContainer}>
 						<Image source={iconComplete} style={styles.modalImage} />
@@ -221,10 +224,10 @@ export const CreditCardForm = () => {
 						<Text style={styles.modalDescription}>
 							We've added your credit details
 						</Text>
-						<Button label="Continue" onPress={() => setModal(false)}></Button>
+						<Button label="Continue" onPress={handleFormReset}></Button>
 					</View>
 				</View>
-			</Modal>
+			)}
 		</View>
 	);
 };
@@ -286,8 +289,13 @@ const styles = StyleSheet.create({
 		borderColor: theme.colors.red400,
 	},
 	backdrop: {
-		flex: 1,
-		backgroundColor: "rgba(0,0,0,0.5)",
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		zIndex: 10,
+		backgroundColor: theme.colors.white,
 		justifyContent: "center",
 		alignItems: "center",
 	},
