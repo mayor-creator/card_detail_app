@@ -1,6 +1,7 @@
 export const typography = {
 	fontFamily: {
-		regular: "SpaceGrotesk",
+		regular: "SpaceGrotesk_400Regular",
+		medium: "SpaceGrotesk_500Medium",
 	},
 
 	fontSize: {

@@ -132,7 +132,7 @@ export const CreditCardForm = () => {
 					<Text style={styles.label}>CARDHOLDER NAME</Text>
 					<TextInput
 						style={[styles.input, error.name && styles.inputError]}
-						placeholder="e.g. Jane Applessed"
+						placeholder="e.g. Jane Appleseed"
 						keyboardType="default"
 						value={cardName}
 						onChangeText={handleCardNameChange}
@@ -259,9 +259,8 @@ const styles = StyleSheet.create({
 	},
 	label: {
 		color: theme.colors.purple950,
-		fontFamily: theme.typography.fontFamily.regular,
+		fontFamily: theme.typography.fontFamily.medium,
 		fontSize: theme.typography.fontSize.sm,
-		fontWeight: "500",
 	},
 	input: {
 		color: theme.colors.purple950,
@@ -269,9 +268,8 @@ const styles = StyleSheet.create({
 		borderRadius: 8 * SCALE,
 		borderWidth: 1 * SCALE,
 		borderColor: theme.colors.gray200,
-		fontFamily: theme.typography.fontFamily.regular,
+		fontFamily: theme.typography.fontFamily.medium,
 		fontSize: theme.typography.fontSize.lg,
-		fontWeight: "500",
 		width: 327 * SCALE,
 		height: 45 * SCALE,
 		paddingHorizontal: 16 * SCALE,
@@ -293,9 +291,8 @@ const styles = StyleSheet.create({
 	},
 	errorMessage: {
 		color: theme.colors.red400,
-		fontFamily: theme.typography.fontFamily.regular,
+		fontFamily: theme.typography.fontFamily.medium,
 		fontSize: theme.typography.fontSize.sm,
-		fontWeight: "500",
 	},
 	inputError: {
 		borderWidth: 1 * SCALE,
@@ -325,14 +322,12 @@ const styles = StyleSheet.create({
 	},
 	modalTitle: {
 		color: theme.colors.purple950,
-		fontFamily: theme.typography.fontFamily.regular,
+		fontFamily: theme.typography.fontFamily.medium,
 		fontSize: theme.typography.fontSize.xxl,
-		fontWeight: "500",
 	},
 	modalDescription: {
 		color: theme.colors.gray950,
-		fontFamily: theme.typography.fontFamily.regular,
+		fontFamily: theme.typography.fontFamily.medium,
 		fontSize: theme.typography.fontSize.lg,
-		fontWeight: "500",
 	},
 });

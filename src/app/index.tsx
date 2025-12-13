@@ -1,23 +1,35 @@
-import { useFonts } from "expo-font";
+import {
+	SpaceGrotesk_400Regular,
+	SpaceGrotesk_500Medium,
+	useFonts,
+} from "@expo-google-fonts/space-grotesk";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import {
+	Keyboard,
+	StyleSheet,
+	TouchableWithoutFeedback,
+	View,
+} from "react-native";
 import { BackgroundImageCard } from "../components/BackgroundCard";
 import { CreditCardForm } from "../components/CreditCardForm";
 import { theme } from "../theme";
 
 export default function Index() {
 	const [fontsLoaded] = useFonts({
-		SpaceGrotesk: require("../../assets/fonts/SpaceGrotesk-VariableFont_wght.ttf"),
+		SpaceGrotesk_400Regular,
+		SpaceGrotesk_500Medium,
 	});
 
 	if (!fontsLoaded) return null;
 
 	return (
-		<View style={styles.container}>
-			<StatusBar style="light" />
-			<BackgroundImageCard />
-			<CreditCardForm />
-		</View>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<View style={styles.container}>
+				<StatusBar style="light" />
+				<BackgroundImageCard />
+				<CreditCardForm />
+			</View>
+		</TouchableWithoutFeedback>
 	);
 }
 

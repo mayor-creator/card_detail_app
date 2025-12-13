@@ -31,7 +31,7 @@ export const BackgroundImageCard = () => {
 						0000 0000 0000 0000
 					</Text>
 					<Text style={[styles.textColor, styles.cardName]}>
-						JANE APPLESSED
+						JANE APPLESEED
 					</Text>
 					<Text style={[styles.textColor, styles.cardDate]}>00/00</Text>
 				</View>
