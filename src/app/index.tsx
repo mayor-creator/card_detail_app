@@ -38,7 +38,4 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: theme.colors.white,
 	},
-	text: {
-		fontFamily: theme.typography.fontFamily.regular,
-	},
 });

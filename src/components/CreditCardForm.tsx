@@ -133,6 +133,7 @@ export const CreditCardForm = () => {
 					<TextInput
 						style={[styles.input, error.name && styles.inputError]}
 						placeholder="e.g. Jane Appleseed"
+						placeholderTextColor={theme.colors.purple950}
 						keyboardType="default"
 						value={cardName}
 						onChangeText={handleCardNameChange}
@@ -147,6 +148,7 @@ export const CreditCardForm = () => {
 					<TextInput
 						style={[styles.input, error.number && styles.inputError]}
 						placeholder="e.g. 1234 5678 9123 0000"
+						placeholderTextColor={theme.colors.purple950}
 						keyboardType="number-pad"
 						value={cardNumber}
 						onChangeText={handleCardNumberChange}
@@ -163,6 +165,7 @@ export const CreditCardForm = () => {
 							<View>
 								<TextInput
 									placeholder="MM"
+									placeholderTextColor={theme.colors.purple950}
 									keyboardType="number-pad"
 									style={[
 										styles.input,
@@ -179,6 +182,7 @@ export const CreditCardForm = () => {
 							<View>
 								<TextInput
 									placeholder="YY"
+									placeholderTextColor={theme.colors.purple950}
 									keyboardType="number-pad"
 									style={[
 										styles.input,
@@ -199,6 +203,7 @@ export const CreditCardForm = () => {
 						<TextInput
 							placeholder="e.g. 123"
 							keyboardType="number-pad"
+							placeholderTextColor={theme.colors.purple950}
 							style={[
 								styles.input,
 								styles.cvcInput,
